@@ -1,3 +1,6 @@
+library(car)
+
+#setwd("C:/Users/Kodjo/Desktop/Cours Statistiques/Projet STNUM/Projet_stats")
 load("donnees_traitees")
 donnees = donnees1[!colnames(donnees1)=="communityname"]
 numcol <- ncol(donnees)
@@ -50,3 +53,10 @@ modele3 <- paste(modele3,"donnees_entrainement$",names(donnees_entrainement_3)[n
 
 result3 <- lm(modele3,data=donnees_entrainement_3)
 summary(result3)
+
+#Detection de colinéarité
+vif(result3)
+# Trace du graph entre les deux variables que le test permet de faire ressortir
+plot(donnees_entrainement$RentLowQ,donnees_entrainement$MedRent)
+#Conclu : il faudrait supprimer une des variables
+plot(donnees_entrainement$pctWInvInc,donnees_entrainement$MalePctNevMarr)
