@@ -54,7 +54,7 @@ modele3 <- paste(modele3,"donnees_entrainement$",names(donnees_entrainement_3)[n
 result3 <- lm(modele3,data=donnees_entrainement_3)
 summary(result3)
 
-#Detection de colinéarité
+#Detection de colinearite
 vif(result3)
 # Trace du graph entre les deux variables que le test permet de faire ressortir
 plot(donnees_entrainement$RentLowQ,donnees_entrainement$MedRent)
