@@ -1,3 +1,4 @@
+setwd("C:/Users/Kodjo/Desktop/Cours Statistiques/Projet STNUM/Projet_stats")
 load("donnees_traitees")
 donnees = donnees1[!colnames(donnees1)=="communityname"]
 numcol <- ncol(donnees)
@@ -48,12 +49,13 @@ for (nom in names(donnees_entrainement_3)[1:(numcol3-2)]) {
 }
 modele3 <- paste(modele3,"donnees_entrainement$",names(donnees_entrainement_3)[numcol3-1],sep="")
 
-#result3 <- lm(modele3,data=donnees_entrainement_3)
-#summary(result3)
+result3 <- lm(modele3,data=donnees_entrainement_3)
+summary(result3)
 
 # Modele 4 : prise en compte de termes quadratiques
 load("donnees_new")
 #summary(donnees_new)
+
 donnees_new <- data.frame(donnees_new)
 donnees_new_entrainement <- donnees_new[1:seuil,]
 donnees_new_test <- donnees_new[(seuil+1):numrow,]
@@ -81,3 +83,27 @@ rownames(donnees_new_test) <- 1:nrow(donnees_new_test)
 estimation <- predict(result4,newdata=donnees_new_test[1,1:(numcol_new-1)])
 estimation
 # donnees_new_test[3,numcol_new]
+
+
+result_estim<-data.frame(Estimation=c(),ValeurReelle=c(),Ecart=c())
+
+coef<-result4$coefficients
+coef[is.na(coef)]<-0
+donnees_new_test[is.na(donnees_new_test)]<-0
+
+for (k in nrow(donnees_new_test):1) {
+  estimate_value<-coef[1]
+  record<-donnees_new_test[k,1:303]
+  for (i in 1:303) {
+    estimate_value<-estimate_value+coef[i+1]*record[i]
+  }
+  estimate_value<-estimate_value[1,1]
+  real_value<-donnees_new_test[k,304]
+  ecart<-(abs(real_value-estimate_value)/real_value)
+  r<-data.frame(Estimation=c(estimate_value),ValeurReelle=c(real_value),Ecart=c(ecart))
+  result_estim<-rbind(r,result_estim)
+  print(k)
+  }
+
+result_estim
+
