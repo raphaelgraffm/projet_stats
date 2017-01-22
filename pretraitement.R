@@ -5,6 +5,7 @@ numrow <- nrow(donnees)
 #print(numcol)
 #print(numrow)
 donnees1 <- donnees
+#summary(donnees1)
 
 # Suppression des colonnes pour lesquelles on a peu d'informations
 # Et replissage par la moyenne des donnees manquantes
@@ -49,7 +50,7 @@ for (col in 1:numcol) {
 #}
 
 donnees1 <- donnees1[,-invalid_cols]
-save(donnees1, file = "donnees_traitees")
+#save(donnees1, file = "donnees_traitees")
 
 
 #summary(donnees1)
