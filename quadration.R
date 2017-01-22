@@ -12,7 +12,7 @@ for (col in 1:(numcol-1)) {
         donnees_new[row, 3*col] <- donnees[row,col]^3
     }
     nom_colonne <- names(donnees)[col]
-    noms <- c(noms,nom_colonne, paste(nom_colonne,"_2",sep=""), paste(nom_colonne,"_3",sep=""))
+    noms <- c(noms,paste(nom_colonne,3*col-2), paste(nom_colonne,"_2",sep=""), paste(nom_colonne,"_3",sep=""))
 }
 donnees_new[,3*numcol-2] <- donnees$ViolentCrimesPerPop
 noms <- c(noms,"ViolentCrimesPerPop")
