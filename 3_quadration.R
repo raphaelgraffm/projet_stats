@@ -1,4 +1,4 @@
-# Chargement et traitement de la base de données
+# Chargement et traitement de la base de donnees
 
 load("donnees_traitees")
 
@@ -22,14 +22,14 @@ for (col in 1:(numcol-1)) {
     }
 
     # On adopte la convention de nommage suivante :
-    # Les colonnes de base sont renommées nom_colonne.numero_colonne (pour faciliter le comptage)
+    # Les colonnes de base sont renommees nom_colonne.numero_colonne (pour faciliter le comptage)
     # Les noms des colonnes "au carre" est : nom_colonne_2
     # Les noms des colonnes "au cube" est : nom_colonne_3
     nom_colonne <- names(donnees)[col]
     noms <- c(noms,paste(nom_colonne,3*col-2), paste(nom_colonne,"_2",sep=""), paste(nom_colonne,"_3",sep=""))
 }
 
-# On rajoute la colonne ViolentCrimesPerPop, qui elle n'est pas élevée à des puissances supérieures
+# On rajoute la colonne ViolentCrimesPerPop, qui elle n'est pas elevee a des puissances superieures
 donnees_new[,3*numcol-2] <- donnees$ViolentCrimesPerPop
 noms <- c(noms,"ViolentCrimesPerPop")
 

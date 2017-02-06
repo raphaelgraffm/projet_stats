@@ -1,5 +1,5 @@
 library(FactoMineR)
-library(explor) # Package de visualisation d'une ACP'
+library(explor) # Package de visualisation d'une ACP
 
 # Chargement et traitement de la base de donnees
 
@@ -10,9 +10,9 @@ donnees_clustering = donnees_acp[!colnames(donnees_acp)=="ViolentCrimesPerPop"]
 numcol <- ncol(donnees_clustering)
 numrow <- nrow(donnees_clustering)
 
-# Determination du nombre de centres à conserver
+# Determination du nombre de centres a conserver
 
-kmax=10 # Nombre maximum de centres à tester
+kmax=10 # Nombre maximum de centres a tester
 part_inertie_expl = rep(0, times=kmax) # Vecteur des parts d'inertie expliquees
 
 for (k in 2:kmax) {
@@ -23,13 +23,13 @@ for (k in 2:kmax) {
 #plot(part_inertie_expl, type="h", lwd=40, lend="butt", xlim=c(2,kmax),
 #        xaxp=c(2,kmax,kmax-2), xlab="Nombre de clusters", ylab="Part d'inertie expliquee")
 
-# On choisit de séparer les données en trois clusters
+# On choisit de separer les donnees en trois clusters
 cluster_kmeans_3cl = kmeans(donnees_clustering, centers = 3, nstart = 200)
 
-# On rajoute les clusters à notre base de données
+# On rajoute les clusters a notre base de donnees
 donnees_acp$Groupe = as.factor(t(cluster_kmeans_3cl$cluster))
 
-# On affiche les clusters de quelques grandes villes américaines
+# On affiche les clusters de quelques grandes villes americaines
 donnees_acp$Groupe[565] # Los Angeles
 donnees_acp$Groupe[1045] # Washington
 donnees_acp$Groupe[1135] # Miami

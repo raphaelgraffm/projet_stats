@@ -1,4 +1,5 @@
-# Chargement et traitement de la base de données
+# Chargement et traitement de la base de donnees
+
 
 load("donnees_traitees")
 
@@ -6,17 +7,17 @@ donnees <- donnees1
 numcol <- ncol(donnees)
 numrow <- nrow(donnees)
 
-# On definit le pourcentage d'individus qui seront utilisés comme ensemble de test
+# On definit le pourcentage d'individus qui seront utilises comme ensemble de test
 pourcentage_test <- 0.3
 seuil = floor( (1 - pourcentage_test) * numrow)
 
-# On sépare donc les donnees en deux, pour l'entrainement et le test
+# On separe donc les donnees en deux, pour l'entrainement et le test
 donnees_entrainement <- donnees[1:seuil,]
 donnees_test <- donnees[(seuil+1):numrow,]
 
-# Modele 1 : on effectue une regression purement linéaire, sur toutes les varaibles
+# Modele 1 : on effectue une regression purement lineaire, sur toutes les variables
 
-# On construit d'abord le modèle
+# On construit d'abord le modele
 modele1 <- "donnees_entrainement$ViolentCrimesPerPop~"
 for (nom in names(donnees)[1:(numcol-2)]) {
     modele1 <- paste(modele1,"donnees_entrainement$", nom, "+", sep="")
@@ -31,12 +32,12 @@ result1 <- lm(modele1,data=donnees_entrainement)
 # On liste les numeros des colonnes que l'on souhaite garder
 col2 <- c(1,5,10,14,17,18,21,26,28,30,35,40,41,50,63,66,68,69,70,71,73,76,77,80,81,84,87,90,92,100,numcol)
 
-# On construit une nouvelle table, sous-ensemble de la précédente
+# On construit une nouvelle table, sous-ensemble de la precedente
 donnees_entrainement_2 <- donnees_entrainement[col2]
 donnees_test_2 <- donnees_test[col2]
 numcol2 <- length(col2)
 
-# On construit le deuxieme modèle, comme précédemment
+# On construit le deuxieme modele, comme precedemment
 modele2 <- "donnees_entrainement$ViolentCrimesPerPop~"
 for (nom in names(donnees_entrainement_2)[1:(numcol2-2)]) {
     modele2 <- paste(modele2, "donnees_entrainement$", nom, "+", sep="")
@@ -46,7 +47,7 @@ modele2 <- paste(modele2,"donnees_entrainement$", names(donnees_entrainement_2)[
 # On effectue la regression
 result2 <- lm(modele2,data=donnees_entrainement_2)
 
-# Modele 3 : on effectue à nouveau un tri des variables significatives
+# Modele 3 : on effectue a nouveau un tri des variables significatives
 
 col3 <- c(1,2,3,4,6,7,12,13,14,18,19,20,21,22,25,26,27,28,29,numcol2)
 
@@ -64,7 +65,7 @@ result3 <- lm(modele3,data=donnees_entrainement_3)
 
 # Modele 4 : on rajoute des termes quadratiques
 
-# On charge la base de donnees traitee précédemment
+# On charge la base de donnees traitee precedemment
 load("donnees_new")
 
 donnees_new_entrainement <- donnees_new[1:seuil,]
@@ -119,7 +120,7 @@ result6 <- lm(modele6,data=donnees_entrainement_6)
 
 # Test sur les donnees d'entrainement
 
-# On crée un tableau pour contenir la valeur estimée, la valeur observée et l'erreur quadratique
+# On cree un tableau pour contenir la valeur estimee, la valeur observee et l'erreur quadratique
 result_estim_entrainement_1 <- data.frame(Estimation=c(),ValeurReelle=c(),Ecart=c())
 
 coef <- result1$coefficients
@@ -131,7 +132,7 @@ numcol_entrainement <- ncol(donnees_entrainement)
 
 for (k in numrow_entrainement:1) {
 
-    # On calcule de manière itérative l'estimation
+    # On calcule de maniere iterative l'estimation
     estimate_value <- as.numeric(coef[1])
     record <- donnees_entrainement[k,1:(numcol_entrainement-1)]
 
@@ -139,11 +140,11 @@ for (k in numrow_entrainement:1) {
         estimate_value <- estimate_value + as.numeric(coef[i+1]) * as.numeric(record[i])
     }
 
-    # On stocke également la valeur réelle et l'erreur
+    # On stocke egalement la valeur reelle et l'erreur
     real_value <- donnees_entrainement[k,numcol_entrainement]
     ecart <- abs(real_value - estimate_value)**2
 
-    # On rajoute finalement ces donnes au tableau d'erreurs
+    # On rajoute finalement ces donnees au tableau d'erreurs
     r <- data.frame(Estimation=c(estimate_value),ValeurReelle=c(real_value),Ecart=c(ecart))
     result_estim_entrainement_1 <- rbind(r,result_estim_entrainement_1)
  }
@@ -151,7 +152,7 @@ for (k in numrow_entrainement:1) {
 # On affiche l'erreur obtenue
 cat( sprintf("Erreur moyenne sur les donnees d'entrainement pour le modele 1 : %.2f\n", colMeans(result_estim_entrainement_1)[3] ) )
 
-# On procède de la même manière pour les données de test
+# On procede de la meme maniere pour les donnees de test
 
 result_estim_1 <- data.frame(Estimation=c(),ValeurReelle=c(),Ecart=c())
 

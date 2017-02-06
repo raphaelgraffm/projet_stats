@@ -1,4 +1,5 @@
-# On charge la base de donnes initiale
+# On charge la base de donnees initiale
+setwd("C:/Users/Kodjo/Downloads/code/code")
 donnees  <- read.csv("donnees.csv", sep=";", stringsAsFactors=FALSE)
 
 numcol <- ncol(donnees)
